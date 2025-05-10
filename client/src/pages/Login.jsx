@@ -81,7 +81,7 @@ export default function Login() {
               Sign in with Google
             </button>
             <div className="text-xs text-center text-gray-700 dark:text-zinc-400 mt-4">
-              By signing in or creating an account, you are agreeing to our <a href="#" className="text-blue-500 underline mx-1">Terms & Conditions</a> and <a href="#" className="text-blue-500 underline mx-1">Privacy Policy</a>.
+              By signing in or creating an account, you are agreeing to our <a href="#" className="text-blue-500 underline mx-1">Terms & Conditions.</a> and <a href="#" className="text-blue-500 underline mx-1">Privacy Policy</a>.
             </div>
           </div>
         </div>
