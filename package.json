@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "react-calendar-heatmap": "^1.10.0",
+    "tailwindcss": "^4.1.6"
+  },
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && node server.js",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "install-deps": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
+    "postinstall": "npm run install-deps"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.6",
+    "concurrently": "^8.2.2",
+    "gh-pages": "^6.3.0"
+  }
+}
