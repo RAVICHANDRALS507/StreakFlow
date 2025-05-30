@@ -1,8 +1,31 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const BACKEND_URL = "http://localhost:5000";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [form, setForm] = useState({ gmail: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/auth/login`, form);
+      setSuccess(res.data.message);
+      // Redirect or store user info/token here if needed
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed.");
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#fafafa] dark:bg-[#18181b]">
@@ -22,19 +45,23 @@ export default function Login() {
               </div>
               <hr className="mx-auto mt-2 border-gray-200 dark:border-zinc-700" />
             </div>
-            <form className="mt-2 space-y-4" autoComplete="off">
+            {error && <div className="text-red-500">{error}</div>}
+            {success && <div className="text-green-500">{success}</div>}
+            <form className="mt-2 space-y-4" autoComplete="off" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700 dark:text-zinc-200">
-                  Email address
+                <label htmlFor="gmail" className="block mb-1 text-sm font-medium text-gray-700 dark:text-zinc-200">
+                  Gmail address
                 </label>
                 <input
-                  id="email"
-                  name="email"
+                  id="gmail"
+                  name="gmail"
                   type="email"
                   autoComplete="email"
                   required
+                  value={form.gmail}
+                  onChange={handleChange}
                   className="block w-full px-4 py-2.5 text-sm border border-gray-200 dark:border-zinc-700 rounded-md dark:bg-zinc-800 dark:placeholder:text-zinc-400 outline-none dark:text-zinc-100"
-                  placeholder="Enter email address"
+                  placeholder="Enter gmail address"
                 />
               </div>
               <div>
@@ -49,6 +76,8 @@ export default function Login() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     required
+                    value={form.password}
+                    onChange={handleChange}
                     className="block w-full px-4 py-2.5 text-sm border border-gray-200 dark:border-zinc-700 rounded-md dark:bg-zinc-800 dark:placeholder:text-zinc-400 outline-none dark:text-zinc-100"
                     placeholder="Enter password"
                   />

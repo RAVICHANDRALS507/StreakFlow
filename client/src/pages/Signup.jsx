@@ -1,37 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+// import { BACKEND_URL } from '../services/api';
+
+const BACKEND_URL = "http://localhost:5000";
 
 const SignUp = () => {
+  const [form, setForm] = useState({
+    username: '',
+    gmail: '',
+    password: '',
+    confirmpassword: ''
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    if (form.password !== form.confirmpassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/auth/register`, form);
+      setSuccess(res.data.message);
+      setTimeout(() => {
+        window.location.reload(); // <-- Refresh after 1 second
+      }, 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed.');
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#fafafa] dark:bg-[#18181b] text-[#212226] dark:text-zinc-100">
       {/* Main Content */}
       <div className="flex flex-grow">
         {/* Left: Form Section */}
         <div className="flex-1 flex items-center justify-center bg-white dark:bg-zinc-900 p-8 lg:p-10">
-          <div class="w-full max-w-md flex flex-col gap-4 p-10">
+          <div className="w-full max-w-md flex flex-col gap-4 p-10">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-zinc-100 mb-2">Sign up</h2>
             <p className="text-sm mb-4 text-gray-600 dark:text-zinc-400">
               Already have an account? <a href="/login" className="font-medium text-orange-600 dark:text-orange-400 hover:underline">Sign in here</a>
             </p>
-
-            <form className="space-y-4">
+            {error && <div className="text-red-500">{error}</div>}
+            {success && <div className="text-green-500">{success}</div>}
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-zinc-200">Username</label>
-                <input type="text" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Username" required />
+                <input name="username" value={form.username} onChange={handleChange} type="text" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Username" required />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-zinc-200">Gmail</label>
-                <input type="email" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Gmail" required />
+                <input name="gmail" value={form.gmail} onChange={handleChange} type="email" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Gmail" required />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-zinc-200">Password</label>
-                <input type="password" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Password" required />
+                <input name="password" value={form.password} onChange={handleChange} type="password" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Enter Password" required />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-zinc-200">Confirm Password</label>
-                <input type="password" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Confirm Password" required />
+                <input name="confirmpassword" value={form.confirmpassword} onChange={handleChange} type="password" className="w-full mt-1 p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-100" placeholder="Confirm Password" required />
               </div>
 
               <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-md">Sign Up</button>
