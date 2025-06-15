@@ -4,6 +4,8 @@
     "tailwindcss": "^4.1.6"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "client": "cd client && npm run dev",
     "server": "cd server && node server.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
