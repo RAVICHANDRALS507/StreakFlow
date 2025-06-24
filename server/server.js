@@ -1,19 +1,24 @@
-// server/index.js
+import express from 'express'
+import cors from 'cors'
+import authRoutes from './routes/authRoutes.js';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 5000;
+const app = express()
+const PORT = process.env.PORT || 5000
 
-// Example route
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from the server!' });
-});
+dotenv.config();
+connectDB();
 
-// Add this route for the root path
+app.use(cors())
+app.use(express.json())
+
 app.get('/', (req, res) => {
-  res.send('Welcome to the Express server!');
-});
+  res.send('API is running!')
+})
+
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+  console.log(`✅ Server running on port ${PORT}`)
+})
