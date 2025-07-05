@@ -10,7 +10,10 @@ const PORT = process.env.PORT || 5000
 dotenv.config();
 connectDB();
 
-app.use(cors())
+app.use(cors({
+  origin: 'https://streak-flow-mk6xkeanj-ravichandra-l-ss-projects.vercel.app',
+  credentials: true
+}))
 app.use(express.json())
 
 app.get('/', (req, res) => {
