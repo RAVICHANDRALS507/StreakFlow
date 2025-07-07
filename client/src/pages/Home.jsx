@@ -25,7 +25,7 @@ export default function Home() {
           </Link>
           <Link to="/signup">
             <button className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md shadow hover:bg-orange-600">
-              Sign Up
+              Get Started
             </button>
           </Link>
         </div>
@@ -145,7 +145,7 @@ export default function Home() {
       <footer className="flex flex-col items-center py-8 px-4 bg-white dark:bg-zinc-900 border-t mt-8">
         <div className="text-2xl font-bold mb-1">Ready to <span className="text-orange-500">unlock</span> your best self?</div>
         <div className="mb-4 text-[#979ea1] dark:text-zinc-400">Start your habit journey today!</div>
-        <button className="px-8 py-3 bg-orange-500 text-white text-lg rounded-lg font-bold shadow hover:bg-orange-600 mb-5">Sign Up Free</button>
+        <button className="px-8 py-3 bg-orange-500 text-white text-lg rounded-lg font-bold shadow hover:bg-orange-600 mb-5">Get Started</button>
         <div className="flex gap-4 mb-2">
           <a href="#" className="text-[#979ea1] dark:text-zinc-400 hover:text-orange-500">FAQ</a>
           <a href="#" className="text-[#979ea1] dark:text-zinc-400 hover:text-orange-500">Support</a>
