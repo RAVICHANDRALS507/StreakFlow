@@ -16,6 +16,7 @@ app.use(
       "https://streak-flow-mk6xkeanj-ravichandra-l-ss-projects.vercel.app",
       "https://streak-flow-8fuw0fry1-ravichandra-l-ss-projects.vercel.app/",
       "https://streak-flow-git-main-ravichandra-l-ss-projects.vercel.app/",
+      "https://streak-flow-ncvjk0npk-ravichandra-l-ss-projects.vercel.app/",
       "http://localhost:5173",
       "https://streak-flow.vercel.app"
     ],
