@@ -4,11 +4,10 @@ import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
-const app = express();
-const PORT = process.env.PORT || 5000;
-
 dotenv.config();
 connectDB();
+
+const app = express();
 
 app.use(
   cors({
@@ -16,6 +15,7 @@ app.use(
       "https://streak-flow-mk6xkeanj-ravichandra-l-ss-projects.vercel.app",
       "https://streak-flow-8fuw0fry1-ravichandra-l-ss-projects.vercel.app/",
       "https://streak-flow-git-main-ravichandra-l-ss-projects.vercel.app/",
+      "https://streak-flow.vercel.app",
       "http://localhost:5173"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -24,9 +24,7 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: '2mb' })); // <-- Add this line
-
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
 
 app.get("/", (req, res) => {
   res.send("API is running!");
@@ -34,6 +32,5 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+// Only export the handler for Vercel
+export default app;
